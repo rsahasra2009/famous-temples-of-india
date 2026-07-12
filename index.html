@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Famous Temples of India</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(135deg, #1a0000 0%, #4a1010 30%, #8b4513 60%, #d4a017 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://en.wikipedia.org/wiki/Special:Redirect/file/Konark_Sun_Temple_Front_view.jpg?width=1920') center/cover;
+            opacity: 0.3;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, #0a0a0a 70%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #f7d794, #f8b739, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: #ccc;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator span {
+            display: block;
+            width: 30px;
+            height: 50px;
+            border: 2px solid #f8b739;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .scroll-indicator span::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #f8b739;
+            border-radius: 50%;
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scrollDown 2s infinite;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(248, 183, 57, 0.1);
+        }
+
+        nav .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f8b739;
+        }
+
+        nav .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        nav .nav-links a:hover {
+            color: #f8b739;
+        }
+
+        /* Section Styling */
+        .section-title {
+            text-align: center;
+            padding: 5rem 2rem 3rem;
+        }
+
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            background: linear-gradient(135deg, #f8b739, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #888;
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* Temple Cards Grid */
+        .temples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            padding: 2rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .temple-card {
+            background: linear-gradient(145deg, #1a1a1a, #111);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(248, 183, 57, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .temple-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(248, 183, 57, 0.4);
+            box-shadow: 0 20px 60px rgba(248, 183, 57, 0.15);
+        }
+
+        .temple-card .card-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s;
+            background: linear-gradient(135deg, #2a1a0a, #4a2510, #1a1a1a);
+        }
+
+        .temple-card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-image-wrapper {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(transparent, #1a1a1a);
+        }
+
+        .state-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(248, 183, 57, 0.9);
+            color: #000;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 2;
+            backdrop-filter: blur(5px);
+        }
+
+        .card-content {
+            padding: 1.5rem 2rem 2rem;
+        }
+
+        .card-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: #f7d794;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-content .location {
+            color: #f8b739;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .card-content p {
+            color: #999;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* Featured Temple */
+        .featured-section {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .featured-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid rgba(248, 183, 57, 0.2);
+            padding: 3rem;
+            align-items: center;
+        }
+
+        .featured-card img {
+            width: 100%;
+            border-radius: 20px;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .featured-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #f7d794;
+            margin-bottom: 1rem;
+        }
+
+        .featured-card p {
+            color: #999;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: #f8b739;
+        }
+
+        .stat-item p {
+            color: #888;
+            margin-top: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            border-top: 1px solid rgba(248, 183, 57, 0.1);
+            margin-top: 3rem;
+        }
+
+        footer p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        footer .footer-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #f7d794;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        @keyframes scrollDown {
+            0% { opacity: 1; top: 8px; }
+            100% { opacity: 0; top: 30px; }
+        }
+
+        /* Scroll Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .temples-grid {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+            }
+
+            .featured-card {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            nav .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">🙏 Temples of India</div>
+        <div class="nav-links">
+            <a href="#temples">Explore</a>
+            <a href="#featured">Featured</a>
+            <a href="#stats">Facts</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Sacred Temples of India</h1>
+            <p>A divine journey through India's most magnificent temples — one from every state, each a masterpiece of devotion, art, and architecture.</p>
+        </div>
+        <div class="scroll-indicator">
+            <span></span>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats" id="stats">
+        <div class="stat-item reveal">
+            <h3>28+</h3>
+            <p>States Covered</p>
+        </div>
+        <div class="stat-item reveal">
+            <h3>2000+</h3>
+            <p>Years of History</p>
+        </div>
+        <div class="stat-item reveal">
+            <h3>100M+</h3>
+            <p>Annual Visitors</p>
+        </div>
+        <div class="stat-item reveal">
+            <h3>∞</h3>
+            <p>Divine Blessings</p>
+        </div>
+    </section>
+
+    <!-- Featured Temple -->
+    <section class="featured-section" id="featured">
+        <div class="featured-card reveal">
+            <img src="https://en.wikipedia.org/wiki/Special:Redirect/file/Meenakshi_Amman_West_Tower.jpg?width=800" alt="Meenakshi Amman Temple">
+            <div>
+                <h3>Meenakshi Amman Temple</h3>
+                <p><strong>Tamil Nadu</strong> — Madurai</p>
+                <br>
+                <p>The Meenakshi Amman Temple is a historic Hindu temple located in Madurai, Tamil Nadu. It is dedicated to Goddess Meenakshi (Parvati) and Lord Sundareshwar (Shiva). The temple has 14 magnificent gopurams (gateway towers), with the tallest rising to 170 feet, covered in thousands of colorful sculptures depicting gods, demons, and mythical creatures. Built over centuries, this temple is a masterpiece of Dravidian architecture and attracts over 15,000 visitors daily.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Title -->
+    <div class="section-title" id="temples">
+        <h2>One Temple, Every State</h2>
+        <p>Discover the spiritual heritage of India through its most iconic temples across all states</p>
+    </div>
+
+    <!-- Temples Grid -->
+    <div class="temples-grid">
+
+        <!-- Andhra Pradesh -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://en.wikipedia.org/wiki/Special:Redirect/file/Tirumala_090615.jpg?width=600" alt="Tirumala Venkateswara Temple">
+                <span class="state-badge">Andhra Pradesh</span>
+            </div>
+            <div class="card-content">
+                <h3>Tirumala Venkateswara Temple</h3>
+                <div class="location">📍 Tirupati, Andhra Pradesh</div>
+                <p>The richest temple in the world, dedicated to Lord Venkateswara. Nestled in the seven hills of Tirumala, it receives 50,000-100,000 pilgrims daily, making it the most visited holy place on Earth.</p>
+            </div>
+        </div>
+
+        <!-- Arunachal Pradesh -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://en.wikipedia.org/wiki/Special:Redirect/file/Tawang_Monastery.jpg?width=600" alt="Tawang Monastery">
+                <span class="state-badge">Arunachal Pradesh</span>
+            </div>
+            <div class="card-content">
+                <h3>Tawang Monastery</h3>
+                <div class="location">📍 Tawang, Arunachal Pradesh</div>
+                <p>The largest monastery in India and second-largest in the world after Lhasa. Perched at 10,000 feet, this 400-year-old Buddhist monastery houses priceless ancient manuscripts and a stunning 18-foot golden Buddha statue.</p>
+            </div>
+        </div>
+
+        <!-- Assam -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://en.wikipedia.org/wiki/Special:Redirect/file/Kamakhya_Temple.jpg?width=600" alt="Kamakhya Temple">
+                <span class="state-badge">Assam</span>
+            </div>
+            <div class="card-content">
+                <h3>Kamakhya Temple</h3>
+                <div class="location">📍 Guwahati, Assam</div>
+                <p>One of the oldest Shakti Peethas, this temple sits atop Nilachal Hill. Dedicated to Goddess Kamakhya, it's the center of Tantric worship and hosts the famous Ambubachi Mela festival annually.</p>
+            </div>
+        </div>
+
+        <!-- Bihar -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://en.wikipedia.org/wiki/Special:Redirect/file/Mahabodhi_temple.jpg?width=600" alt="Mahabodhi Temple">
+                <span class="state-badge">Bihar</span>
+            </div>
+            <div class="card-content">
+                <h3>Mahabodhi Temple</h3>
+                <div class="location">📍 Bodh Gaya, Bihar</div>
+                <p>A UNESCO World Heritage Site marking the spot where Siddhartha Gautama attained enlightenment under the Bodhi Tree. The 55-meter tall temple dates back to the 3rd century BCE and is sacred to Buddhists worldwide.</p>
+            </div>
+        </div>
+
+        <!-- Chhattisgarh -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Laxman_Temple_at_Sirpur%2C_Chhattisgarh.jpg/600px-Laxman_Temple_at_Sirpur%2C_Chhattisgarh.jpg" alt="Laxman Temple Sirpur">
+                <span class="state-badge">Chhattisgarh</span>
+            </div>
+            <div class="card-content">
+                <h3>Laxman Temple</h3>
+                <div class="location">📍 Sirpur, Chhattisgarh</div>
+                <p>A 7th-century red brick temple dedicated to Lord Vishnu, considered one of the finest examples of ancient brick architecture in India. Its intricate carvings and ornamental doorway are marvels of craftsmanship.</p>
+            </div>
+        </div>
+
+        <!-- Goa -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Mangeshi_temple.jpg/600px-Mangeshi_temple.jpg" alt="Shri Mangeshi Temple">
+                <span class="state-badge">Goa</span>
+            </div>
+            <div class="card-content">
+                <h3>Shri Mangeshi Temple</h3>
+                <div class="location">📍 Ponda, Goa</div>
+                <p>The largest and most visited temple in Goa, dedicated to Lord Mangesh (Shiva). Its unique blend of Hindu and Portuguese-Christian architecture features a striking seven-story deepstambha (lamp tower).</p>
+            </div>
+        </div>
+
+        <!-- Gujarat -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://en.wikipedia.org/wiki/Special:Redirect/file/Somnath_Temple.jpg?width=600" alt="Somnath Temple">
+                <span class="state-badge">Gujarat</span>
+            </div>
+            <div class="card-content">
+                <h3>Somnath Temple</h3>
+                <div class="location">📍 Veraval, Gujarat</div>
+                <p>The first among the twelve Jyotirlinga shrines of Lord Shiva. Destroyed and rebuilt 17 times throughout history, it stands as an eternal symbol of resilience and devotion on the shores of the Arabian Sea.</p>
+            </div>
+        </div>
+
+        <!-- Haryana -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Sthaneshwar_Mahadev_Temple_Kurukshetra.jpg/600px-Sthaneshwar_Mahadev_Temple_Kurukshetra.jpg" alt="Sthaneshwar Mahadev Temple">
+                <span class="state-badge">Haryana</span>
+            </div>
+            <div class="card-content">
+                <h3>Sthaneshwar Mahadev Temple</h3>
+                <div class="location">📍 Kurukshetra, Haryana</div>
+                <p>An ancient temple where Lord Shiva blessed the Pandavas before the great Mahabharata war. The sacred tank here is believed to have healing powers and is mentioned in ancient Hindu scriptures.</p>
+            </div>
+        </div>
+
+        <!-- Himachal Pradesh -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://en.wikipedia.org/wiki/Special:Redirect/file/Hidimba_Devi_Temple.jpg?width=600" alt="Hadimba Temple">
+                <span class="state-badge">Himachal Pradesh</span>
+            </div>
+            <div class="card-content">
+                <h3>Hadimba Devi Temple</h3>
+                <div class="location">📍 Manali, Himachal Pradesh</div>
+                <p>A unique pagoda-style wooden temple built in 1553, nestled in a cedar forest. Dedicated to Hidimba Devi from the Mahabharata, its four-tiered roof and intricately carved wooden doorway are architectural gems.</p>
+            </div>
+        </div>
+
+        <!-- Jharkhand -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Baidyanath_jyotirlinga_deoghar.jpg/600px-Baidyanath_jyotirlinga_deoghar.jpg" alt="Baidyanath Temple">
+                <span class="state-badge">Jharkhand</span>
+            </div>
+            <div class="card-content">
+                <h3>Baidyanath Dham</h3>
+                <div class="location">📍 Deoghar, Jharkhand</div>
+                <p>One of the twelve Jyotirlingas and a significant Shakti Peetha. Legend says Ravana worshipped Shiva here. The temple complex houses 21 other temples and attracts millions during the Shravani Mela.</p>
+            </div>
+        </div>
+
+        <!-- Karnataka -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://en.wikipedia.org/wiki/Special:Redirect/file/Virupaksha_Temple,_Hampi.jpg?width=600" alt="Virupaksha Temple Hampi">
+                <span class="state-badge">Karnataka</span>
+            </div>
+            <div class="card-content">
+                <h3>Virupaksha Temple</h3>
+                <div class="location">📍 Hampi, Karnataka</div>
+                <p>A UNESCO World Heritage Site and one of the oldest functioning temples in India, dating back to the 7th century. Its 50-meter gopuram dominates the ruins of the magnificent Vijayanagara Empire.</p>
+            </div>
+        </div>
+
+        <!-- Kerala -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Padmanabhaswamy_Temple_Thiruvananthapuram.jpg/600px-Padmanabhaswamy_Temple_Thiruvananthapuram.jpg" alt="Padmanabhaswamy Temple">
+                <span class="state-badge">Kerala</span>
+            </div>
+            <div class="card-content">
+                <h3>Padmanabhaswamy Temple</h3>
+                <div class="location">📍 Thiruvananthapuram, Kerala</div>
+                <p>Home to treasure vaults containing an estimated $22 billion in gold and precious gems, making it the wealthiest institution in the world. The temple features Lord Vishnu reclining on the serpent Anantha.</p>
+            </div>
+        </div>
+
+        <!-- Madhya Pradesh -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://en.wikipedia.org/wiki/Special:Redirect/file/Khajuraho_-_Kandariya_Mahadeo_Temple.jpg?width=600" alt="Khajuraho Temples">
+                <span class="state-badge">Madhya Pradesh</span>
+            </div>
+            <div class="card-content">
+                <h3>Khajuraho Temples</h3>
+                <div class="location">📍 Khajuraho, Madhya Pradesh</div>
+                <p>A UNESCO World Heritage group of Hindu and Jain temples famous for their stunning erotic sculptures and Nagara-style architecture. Built between 950-1050 AD by the Chandela dynasty, only 25 of the original 85 temples survive.</p>
+            </div>
+        </div>
+
+        <!-- Maharashtra -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Shree_Siddhivinayak_Temple_Mumbai.jpg/600px-Shree_Siddhivinayak_Temple_Mumbai.jpg" alt="Siddhivinayak Temple">
+                <span class="state-badge">Maharashtra</span>
+            </div>
+            <div class="card-content">
+                <h3>Siddhivinayak Temple</h3>
+                <div class="location">📍 Mumbai, Maharashtra</div>
+                <p>Mumbai's most beloved temple dedicated to Lord Ganesha. Built in 1801, it's believed to fulfill wishes of devotees. Celebrities, politicians, and millions of devotees visit this golden-domed temple annually.</p>
+            </div>
+        </div>
+
+        <!-- Manipur -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Shri_Govindajee_Temple_-_Imphal.jpg/600px-Shri_Govindajee_Temple_-_Imphal.jpg" alt="Shri Govindaji Temple">
+                <span class="state-badge">Manipur</span>
+            </div>
+            <div class="card-content">
+                <h3>Shri Govindaji Temple</h3>
+                <div class="location">📍 Imphal, Manipur</div>
+                <p>A Vaishnavite temple with twin golden domes, located within the royal palace complex. Built in the 18th century, it's the spiritual center of Manipur's Vaishnavism and features daily Raas Leela performances.</p>
+            </div>
+        </div>
+
+        <!-- Meghalaya -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Nartiang_Monoliths.jpg/600px-Nartiang_Monoliths.jpg" alt="Nartiang Durga Temple">
+                <span class="state-badge">Meghalaya</span>
+            </div>
+            <div class="card-content">
+                <h3>Nartiang Durga Temple</h3>
+                <div class="location">📍 Jaintia Hills, Meghalaya</div>
+                <p>The largest and oldest temple in Meghalaya, dedicated to Goddess Durga. Surrounded by ancient monoliths and standing stones erected by the Jaintia kings, it's a unique blend of Hindu and tribal culture.</p>
+            </div>
+        </div>
+
+        <!-- Mizoram -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Solomon%27s_Temple%2C_Aizawl.jpg/600px-Solomon%27s_Temple%2C_Aizawl.jpg" alt="Solomon's Temple Mizoram">
+                <span class="state-badge">Mizoram</span>
+            </div>
+            <div class="card-content">
+                <h3>Solomon's Temple</h3>
+                <div class="location">📍 Aizawl, Mizoram</div>
+                <p>A grand church modeled after the biblical Solomon's Temple, perched atop a hill overlooking Aizawl. Completed in 2017, it can accommodate 5,000 people and is a testament to Mizoram's Christian heritage.</p>
+            </div>
+        </div>
+
+        <!-- Nagaland -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Cathedral_Catholic_Church_Kohima.jpg/600px-Cathedral_Catholic_Church_Kohima.jpg" alt="Cathedrals in Nagaland">
+                <span class="state-badge">Nagaland</span>
+            </div>
+            <div class="card-content">
+                <h3>Cathedral of Reconciliation</h3>
+                <div class="location">📍 Kohima, Nagaland</div>
+                <p>One of the largest cathedrals in Asia, this magnificent church symbolizes peace and faith. Nagaland's deeply Christian communities have created stunning places of worship amidst the misty Naga hills.</p>
+            </div>
+        </div>
+
+        <!-- Odisha -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://en.wikipedia.org/wiki/Special:Redirect/file/Jagannath_Temple_Puri.jpg?width=600" alt="Jagannath Temple Puri">
+                <span class="state-badge">Odisha</span>
+            </div>
+            <div class="card-content">
+                <h3>Jagannath Temple</h3>
+                <div class="location">📍 Puri, Odisha</div>
+                <p>One of the Char Dham pilgrimage sites, famous for the annual Rath Yatra festival. The 65-meter tall temple, built in the 12th century, has the world's largest kitchen feeding 100,000 people daily. Its flag always flies opposite to the wind direction.</p>
+            </div>
+        </div>
+
+        <!-- Punjab -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://en.wikipedia.org/wiki/Special:Redirect/file/Golden_Temple,_Amritsar_03.jpg?width=600" alt="Golden Temple Amritsar">
+                <span class="state-badge">Punjab</span>
+            </div>
+            <div class="card-content">
+                <h3>Golden Temple (Harmandir Sahib)</h3>
+                <div class="location">📍 Amritsar, Punjab</div>
+                <p>The holiest Gurdwara of Sikhism, covered in 750 kg of pure gold. Its langar (community kitchen) feeds over 100,000 people daily regardless of caste, creed, or religion — the world's largest free meal service.</p>
+            </div>
+        </div>
+
+        <!-- Rajasthan -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Dilwara_Temple_Mount_Abu.jpg/600px-Dilwara_Temple_Mount_Abu.jpg" alt="Dilwara Temples">
+                <span class="state-badge">Rajasthan</span>
+            </div>
+            <div class="card-content">
+                <h3>Dilwara Temples</h3>
+                <div class="location">📍 Mount Abu, Rajasthan</div>
+                <p>Five Jain temples built between 11th-13th centuries, renowned for their extraordinary marble carvings so delicate that marble appears like lace. The ceiling work is considered the finest in the world.</p>
+            </div>
+        </div>
+
+        <!-- Sikkim -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://en.wikipedia.org/wiki/Special:Redirect/file/Rumtek_Monastery.jpg?width=600" alt="Rumtek Monastery">
+                <span class="state-badge">Sikkim</span>
+            </div>
+            <div class="card-content">
+                <h3>Rumtek Monastery</h3>
+                <div class="location">📍 Gangtok, Sikkim</div>
+                <p>The seat of the Karmapa, head of the Karma Kagyu lineage of Tibetan Buddhism. This ornate monastery houses some of the world's rarest Buddhist relics including a golden stupa containing the remains of the 16th Karmapa.</p>
+            </div>
+        </div>
+
+        <!-- Telangana -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ramappa_Temple_Palampet_Warangal.jpg/600px-Ramappa_Temple_Palampet_Warangal.jpg" alt="Ramappa Temple">
+                <span class="state-badge">Telangana</span>
+            </div>
+            <div class="card-content">
+                <h3>Ramappa Temple</h3>
+                <div class="location">📍 Palampet, Telangana</div>
+                <p>A UNESCO World Heritage Site built in 1213 AD with unique floating bricks that are so light they can float on water. Marco Polo called it "the brightest star in the galaxy of temples." Its engineering defies belief even today.</p>
+            </div>
+        </div>
+
+        <!-- Tripura -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Tripura_Sundari_Temple%2C_Udaipur%2C_Tripura.jpg/600px-Tripura_Sundari_Temple%2C_Udaipur%2C_Tripura.jpg" alt="Tripura Sundari Temple">
+                <span class="state-badge">Tripura</span>
+            </div>
+            <div class="card-content">
+                <h3>Tripura Sundari Temple</h3>
+                <div class="location">📍 Udaipur, Tripura</div>
+                <p>One of the 51 Shakti Peethas, this 500-year-old temple is dedicated to Goddess Tripura Sundari. Set beside a beautiful lake called Kalyan Sagar, it's often called the "second Kamakhya" of the Northeast.</p>
+            </div>
+        </div>
+
+        <!-- Uttar Pradesh -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Kashi_Vishwanath_Temple_Varanasi.jpg/600px-Kashi_Vishwanath_Temple_Varanasi.jpg" alt="Kashi Vishwanath Temple">
+                <span class="state-badge">Uttar Pradesh</span>
+            </div>
+            <div class="card-content">
+                <h3>Kashi Vishwanath Temple</h3>
+                <div class="location">📍 Varanasi, Uttar Pradesh</div>
+                <p>One of the most famous Hindu temples dedicated to Lord Shiva, located on the banks of the holy Ganges. The temple's gold-plated spire and dome (donated by Maharaja Ranjit Singh) shimmer magnificently in the sun.</p>
+            </div>
+        </div>
+
+        <!-- Uttarakhand -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://en.wikipedia.org/wiki/Special:Redirect/file/Kedarnath_Temple.jpg?width=600" alt="Kedarnath Temple">
+                <span class="state-badge">Uttarakhand</span>
+            </div>
+            <div class="card-content">
+                <h3>Kedarnath Temple</h3>
+                <div class="location">📍 Kedarnath, Uttarakhand</div>
+                <p>Perched at 11,755 feet in the Himalayas, this 1000-year-old stone temple survived catastrophic floods in 2013 when a massive boulder diverted the water. Part of the Char Dham, it's accessible only by a 16 km trek.</p>
+            </div>
+        </div>
+
+        <!-- West Bengal -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://en.wikipedia.org/wiki/Special:Redirect/file/Dakshineswar_Kali_Temple.jpg?width=600" alt="Dakshineswar Kali Temple">
+                <span class="state-badge">West Bengal</span>
+            </div>
+            <div class="card-content">
+                <h3>Dakshineswar Kali Temple</h3>
+                <div class="location">📍 Kolkata, West Bengal</div>
+                <p>Built in 1855, this temple is where Sri Ramakrishna Paramahamsa attained spiritual enlightenment. The nine-spired temple dedicated to Goddess Kali sits beautifully on the banks of the Hooghly River with 12 identical Shiva temples.</p>
+            </div>
+        </div>
+
+        <!-- Jammu & Kashmir -->
+        <div class="temple-card reveal">
+            <div class="card-image-wrapper">
+                <img class="card-image" src="https://en.wikipedia.org/wiki/Special:Redirect/file/Vaishno_Devi_Temple.jpg?width=600" alt="Vaishno Devi Temple">
+                <span class="state-badge">Jammu & Kashmir</span>
+            </div>
+            <div class="card-content">
+                <h3>Vaishno Devi Temple</h3>
+                <div class="location">📍 Katra, Jammu & Kashmir</div>
+                <p>Nestled in a holy cave at 5,200 feet in the Trikuta Mountains, this temple receives over 8 million pilgrims annually. The shrine houses three natural rock formations representing Goddesses Lakshmi, Saraswati, and Kali.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-quote">"Where the temple bell rings, the divine awakens within."</p>
+        <p>© 2026 Sacred Temples of India | A celebration of India's spiritual heritage</p>
+    </footer>
+
+    <!-- Scroll Reveal Script -->
+    <script>
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', reveal);
+        window.addEventListener('load', reveal);
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Fallback for broken images - show a styled placeholder with temple name
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('error', function() {
+                const wrapper = this.parentElement;
+                const name = this.alt || 'Temple';
+                const placeholder = document.createElement('div');
+                placeholder.style.cssText = 'width:100%;height:250px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a0a00,#4a2510,#8b4513,#d4a017);text-align:center;padding:2rem;';
+                placeholder.innerHTML = '<span style="font-family:Playfair Display,serif;font-size:1.3rem;color:#f7d794;text-shadow:0 2px 4px rgba(0,0,0,0.5);">' + name + '</span>';
+                this.replaceWith(placeholder);
+            });
+        });
+    </script>
+
+</body>
+</html>
